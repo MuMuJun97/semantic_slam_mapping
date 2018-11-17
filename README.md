@@ -6,6 +6,17 @@
 
 =======
 
+Models
+====
+>- Models files are not here, you can choose to modify this file:
+
+```
+//segnet.cpp
+    std::string model_file = "../models/segnet_model_driving_webdemo.prototxt";
+    std::string trained_file = "../models/segnet_weights_driving_webdemo.caffemodel";
+    std::string label_file = "../models/semantic12.txt";
+```
+
 
 > - [ ] The semantic segmentation methon is based on [Alex Kendall's work ](https://github.com/MuMuJun97/caffe-segnet) 
 
