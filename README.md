@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # This is my graduation project.
 =======
 #This semantic mapping code is my graduation project
@@ -15,20 +15,19 @@
 
 
 ----
-#Getting Started
+Getting Started
 =======
 If you would like to try out this code , you should satisfy these requirements first.
 
 #OpenCV
 I choose to use OpenCV to manipulate images and features. Dowload and install instructions can be found at: http://opencv.org. Required at OpenCV 2.4.x.Note that my code is not compatible with OpenCV3.0
 
-#Eigen 3.0+
+Eigen 3.0+
 ======
 
-#PCL 1.7
+PCL 1.7
 ======
 
-#DBoW2(for loop closure) and g2o(for solving pnp)
+DBoW2(for loop closure) and g2o(for solving pnp)
 =======
 
->>>>>>> Update README.md
