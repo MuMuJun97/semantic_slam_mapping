@@ -1,0 +1,102 @@
+# 起始与终止索引
+start_index=1271
+end_index=1800
+
+# 数据所在目录
+## 05 is loop
+## 13 is good 
+## 14 small loop
+## 16,18 is fine
+#data_source=../dataset/05/
+data_source=/home/relaybot/Mu_Link/KittiData/18/
+#not fine: 12
+gtpose_source=/home/relaybot/Mu_Link/KittiData/01/01.txt
+rgb_dir=image_2/
+rgb_extension=.png
+depth_dir=stereo/
+depth_extension=.png
+
+# 相机内参 05 12
+#camera.cx=601.8873
+#camera.cy=183.1104
+#camera.fx=707.0912
+#camera.fy=707.0912
+
+#camera.baseline=0.537150653 kitti——12
+#camera.baseline=0.537904488 kitti——05
+#16 01
+#camera.cx=607.1928
+#camera.cy=185.2157
+#camera.fx=718.8560
+#camera.fy=718.8560
+#camera.baseline=0.537165719    kitti----16
+#camera.baseline=0.532331858  高速公路弯道--有桥
+#kitti----01
+
+#18
+camera.cx=607.1928
+camera.cy=185.2157
+camera.fx=718.8560
+camera.fy=718.8560
+camera.baseline=0.532331858
+
+#05
+#camera.cx=601.8873
+#camera.cy=183.1104
+#camera.fx=707.0912
+#camera.fy=707.0912
+#camera.baseline=0.537904488
+
+camera.roix=20
+#x--20
+camera.roiy=5
+#y--5
+camera.roiz=40
+#z--30
+
+camera.d0=0
+camera.d1=0
+camera.d2=0
+camera.d3=0
+camera.d4=0
+
+camera.scale=1000.0
+
+# ORB 参数
+orb_features=2000
+#2000
+orb_scale=1.2
+orb_levels=8
+orb_iniThFAST=20
+orb_minThFAST=7
+knn_match_ratio=0.8
+
+# PnP参数
+pnp_min_inliers=10
+pnp_min_matches=15
+
+# Tracker参数
+inlier_threshold=6.0
+tracker_max_lost_frame=10
+tracker_ref_frames=5
+
+# pose graph
+nearby_keyframes=5
+keyframe_min_translation=5.5
+keyframe_min_rotation=2.5
+loop_accumulate_error=4.0
+local_accumulate_error=1.0
+
+# Looper参数
+looper_vocab_file=../vocab/ORBvoc.txt
+looper_min_sim_score=0.015
+looper_min_interval=60
+
+# Mapper参数
+#mapper_resolution=0.02
+mapper_resolution=0.1
+mapper_max_distance=40
+
+# Semantic Motion参数
+motion_area_thres=1000
+motion_overlay_portion_thres=0.143

@@ -1,0 +1,82 @@
+#include <algorithm>
+#include <iosfwd>
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
+#include <iostream>
+#include <dirent.h>
+#include <thread>
+#include <time.h>  
+
+#include "segnet.h"
+
+using namespace std;
+
+int main(int argc, char** argv) 
+{
+	// Load network
+	Classifier classifier;
+	string colorfile = "/home/relaybot/Desktop/slam3d/models/color.png";
+	cv::Mat color = cv::imread(colorfile, 1);
+
+	// Load image
+	for (int i = 0; i < 1; i++)
+	{
+		char file_name[256];
+		//sprintf(file_name, "/home/leo/slam3d/dataset/KITTI_SEMANTIC/Training_00/RGB/1/%06d.png", i);
+		//sprintf(file_name, "/home/leo/T3-2.jpg");
+                sprintf(file_name, "/home/relaybot/Desktop/slam3d/dataset/KITTI_SEMANTIC/Training_00/RGB/ppm/%06d.png",i);
+
+		cv::Mat frame = cv::imread(file_name, 1);
+		cv::resize(frame, frame, cv::Size(480,360));
+		if(frame.size().width<=0)continue;
+		//cv::Mat frame = cv::imread("/home/leo/000785.png", 1);
+		cv::Mat copy_frame = frame.clone();
+
+		// time
+		clock_t starttime=clock();
+
+		// Prediction
+		cv::resize(frame, frame, cv::Size(480,360));
+		cv::imshow("frame", frame);
+		//cv::waitKey(0);
+		std::vector<Prediction> predictions = classifier.Classify(frame);
+		cv::Mat segnet(frame.size(), CV_8UC3, cv::Scalar(0,0,0));
+		for (int i = 0; i < 360; ++i)
+		{	
+			uchar* segnet_ptr = segnet.ptr<uchar>(i);
+			for (int j = 0; j < 480; ++j)
+			{
+				segnet_ptr[j*3+0] = predictions[i*480+j].second;
+				segnet_ptr[j*3+1] = predictions[i*480+j].second;
+				segnet_ptr[j*3+2] = predictions[i*480+j].second;
+			}
+		}
+
+		// recover
+		cv::resize(segnet, segnet, copy_frame.size());
+		cv::LUT(segnet, color, segnet);
+		cv::imshow("segnet", segnet);
+		//cv::waitKey(0);
+		cv::Mat result;
+		cv::addWeighted(segnet, 0.7, copy_frame, 1.0, 0, result);
+		cv::imshow("result", result);
+		//cv::waitKey(0);
+
+		// Counting time
+		clock_t endtime=clock();
+		std::cout<<"No. "<<i<<" time: "<<(endtime - starttime)/1000<<" ms"<<endl;
+
+		char file_save[256];
+		//sprintf(file_save, "/home/leo/slam3d/dataset/KITTI_SEMANTIC/Training_00/segnet/%06d.png", i);
+		sprintf(file_save, "/home/leo/segnet.jpg");
+                sprintf(file_save, "/home/relaybot/Desktop/slam3d/dataset/KITTI_SEMANTIC/Training_00/segnet/ppm/%06d.png",i);
+		cv::imwrite(file_save, segnet);
+
+		cv::waitKey(1);
+	}
+	return 0;
+}
+
+

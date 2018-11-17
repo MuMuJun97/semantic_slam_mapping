@@ -1,0 +1,76 @@
+set( build_libs
+    ${OpenCV_LIBS}
+    ${PCL_LIBRARIES}
+    rgbd_tutor_lib
+    motion_lib
+    ${PROJECT_SOURCE_DIR}/Thirdparty/orbslam_modified/lib/libORB_SLAM2.so
+    ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
+    g2o_core g2o_types_slam3d g2o_solver_csparse g2o_stuff g2o_csparse_extension
+    ${BOOST_LIBRARIES}
+    ${Caffe_LIBRARIES}
+)
+
+add_executable( reading_frame reading_frame.cpp )
+target_link_libraries( reading_frame
+    ${build_libs}
+)
+
+add_executable( test_pnp test_pnp.cpp )
+target_link_libraries( test_pnp
+    ${build_libs}
+)
+
+add_executable( run_tracker run_tracker.cpp )
+target_link_libraries( run_tracker
+    ${build_libs}
+)
+
+add_executable( match_orbfeature_tum match_orbfeature_tum.cpp )
+target_link_libraries( match_orbfeature_tum
+    ${build_libs}
+)
+
+#add_executable( slam3d exp_mapping.cpp )
+#target_link_libraries( slam3d
+#    ${build_libs}
+#)
+
+add_executable( segnet-slam exp_mapping.cpp )
+target_link_libraries( segnet-slam
+        ${build_libs}
+)
+
+add_executable(orbcreate orbcreate.cpp)
+target_link_libraries(orbcreate
+        ${build_libs}
+        )
+
+add_executable( exp_pose_graph exp_pose_graph.cpp )
+target_link_libraries( exp_pose_graph
+    ${build_libs}
+)
+
+add_executable( segnet segnet.cpp )
+target_link_libraries( segnet
+    ${build_libs}
+)
+
+set(mumuinclude
+        ../include/rgbdframe.h
+        ../include/basicStructure.hpp
+        ../include/common_headers.h
+        ../include/common.h
+        ../include/converter.h
+        ../include/feature.h
+        ../include/mapper.h
+        ../include/orb.h
+        ../include/parameter_reader.h
+        ../include/vo_stereo.hpp
+        ../include/vo.hpp
+        ../include/segnet.h
+        ../include/track.h
+        ../include/pose_graph.h
+        ../include/uvdisparity.hpp
+        ../include/quadmatcher.hpp)
+
+add_executable( mumucpp mumu.cpp ${mumuinclude})
